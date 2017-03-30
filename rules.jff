@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 6.4.--><structure>
+	<type>grammar</type>
+	<!--The list of productions.-->
+	<production>
+		<left>PROG</left>
+		<right>CODE</right>
+	</production>
+	<production>
+		<left>PROG</left>
+		<right>CODE;PROC_DEFS</right>
+	</production>
+	<production>
+		<left>PROC_DEFS</left>
+		<right>PROC</right>
+	</production>
+	<production>
+		<left>PROC_DEFS</left>
+		<right>PROC PROC_DEFS</right>
+	</production>
+	<production>
+		<left>PROC</left>
+		<right>proc u {PROG}</right>
+	</production>
+	<production>
+		<left>CODE</left>
+		<right>INSTR</right>
+	</production>
+	<production>
+		<left>CODE</left>
+		<right>INSTR;CODE</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>halt</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>IO</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>CALL</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>ASSIGN</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>COND_BRANCH</right>
+	</production>
+	<production>
+		<left>INSTR</left>
+		<right>COND_LOOP</right>
+	</production>
+	<production>
+		<left>IO</left>
+		<right>input(VAR)</right>
+	</production>
+	<production>
+		<left>CALL</left>
+		<right>u</right>
+	</production>
+	<production>
+		<left>VAR</left>
+		<right>SVAR</right>
+	</production>
+	<production>
+		<left>VAR</left>
+		<right>NVAR</right>
+	</production>
+	<production>
+		<left>SVAR</left>
+		<right>u</right>
+	</production>
+	<production>
+		<left>NVAR</left>
+		<right>u</right>
+	</production>
+	<production>
+		<left>ASSIGN</left>
+		<right>SVAR = string</right>
+	</production>
+	<production>
+		<left>ASSIGN</left>
+		<right>SVAR = SVAR</right>
+	</production>
+	<production>
+		<left>ASSIGN</left>
+		<right>NVAR = NUMEXPR</right>
+	</production>
+	<production>
+		<left>NUMEXPR</left>
+		<right>NVAR</right>
+	</production>
+	<production>
+		<left>NUMEXPR</left>
+		<right>number</right>
+	</production>
+	<production>
+		<left>NUMEXPR</left>
+		<right>CALC</right>
+	</production>
+	<production>
+		<left>CALC</left>
+		<right>add(NUMEXPR,NUMEXPR)</right>
+	</production>
+	<production>
+		<left>CALC</left>
+		<right>sub(NUMEXPR,NUMEXPR)</right>
+	</production>
+	<production>
+		<left>CALC</left>
+		<right>mult(NUMEXPR,NUMEXPR)</right>
+	</production>
+	<production>
+		<left>COND_BRANCH</left>
+		<right>if(BOOL) then {CODE}</right>
+	</production>
+	<production>
+		<left>COND_BRANCH</left>
+		<right>if(BOOL) then {CODE} else {CODE}</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>eq(VAR,VAR)</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>(NVAR &lt; NVAR)</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>(NVAR &gt; NVAR)</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>not BOOL</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>and(BOOL, BOOL)</right>
+	</production>
+	<production>
+		<left>BOOL</left>
+		<right>or(BOOL,BOOL)</right>
+	</production>
+	<production>
+		<left>COND_LOOP</left>
+		<right>while(BOOL) {CODE}</right>
+	</production>
+	<production>
+		<left>COND_LOOP</left>
+		<right>for(NVAR=0; NVAR &lt; NVAR; NVAR = add(NVAR,1)) {CODE}</right>
+	</production>
+</structure>
