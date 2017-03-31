@@ -1,0 +1,44 @@
+0	keyword	eq
+1	comparison symbol	<
+2	comparison symbol	>
+3	keyword	and
+4	keyword	or
+5	keyword	not
+6	keyword	add
+7	keyword	sub
+8	keyword	mult
+9	keyword	while
+10	keyword	for
+11	grouping symbol	,
+12	keyword	else
+13	keyword	output
+14	grouping symbol	(
+15	short string	""
+16	short string	"1"
+17	short string	"12"
+18	short string	"123"
+19	short string	"1234"
+20	short string	"12345"
+21	short string	"123456"
+22	short string	"1234567"
+23	short string	"12345678"
+24	grouping symbol	)
+25	grouping symbol	{
+26	grouping symbol	}
+27	assignment operator	=
+28	keyword	if
+29	keyword	then
+30	keyword	input
+31	user-defined name	teehee
+32	keyword	halt
+33	user-defined name	variables
+34	keyword	proc
+35	integer	34342422
+36	integer	-11233
+37	integer	-133
+38	integer	-3
+39	integer	34242423434233423342781904394290139
+40	integer	-33
+41	user-defined name	words
+42	keyword	for
+43	user-defined name	user
