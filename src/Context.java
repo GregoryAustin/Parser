@@ -6,6 +6,27 @@ public class Context
 {
 	private char rowHeader [];
 	private String [][] transitionTable = new String[133][50];
+
+	private int getColumn(char token) {
+		for (int i = 0; i < rowHeader.length; i++) {
+			if (token == rowHeader[i])
+				return i; 
+		}
+		return -1;
+	}
+
+	public String getState(char token, int nextRow) {
+		if (getColumn(token) != -1) {
+			return transitionTable[nextRow][getColumn(token)];
+		} 
+		return "invToken";
+	}
+
+	public String getState(char token) {
+		return getState(token, 0);
+	}
+
+
 	// 50 columns 
 	public Context () {
 		//Use this row header to determine next state
@@ -63,7 +84,7 @@ public class Context
 				//System.out.println(count);
 				row++;
 			}
-			System.out.println (printRow(0));
+			//System.out.println (printRow(0));
 			
 		}
 		catch (FileNotFoundException e) 

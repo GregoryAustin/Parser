@@ -10,20 +10,17 @@ public class Parser
 	private TokenList lexerList; 
 	private Queue<Character> list; 
 	private Stack<String> stack; 
+	private Context context; 
 
 
 	public Parser () {
 		//This lexeroutput file is from the example.spl file in this directory 
 		lexerList = new TokenList("lexeroutput"); 
 		list = convertToParseFormat(lexerList);
-		//System.out.println(list);
-
-		//Prints out the table ready queue (just to see it)
-		while (!list.isEmpty()) {
-			System.out.print(list.remove());
-		}
-		System.out.println();
 		stack = new Stack<String>();
+		context = new Context();
+
+		this.makeTree();
 	} 
 
 	private Queue<Character> convertToParseFormat(TokenList list){ 
@@ -152,6 +149,27 @@ public class Parser
 
 	}
 
+	private void makeTree() {
+		char tbr = list.remove();
+		String num = context.getState(tbr); 
+		System.out.println(num);
+		if (num.substring(0,1).equals("s")) {
+			shift(tbr, Integer.parseInt(num.substring(1)));
+
+			//while (!list.isEmpty()) {
+			tbr = list.remove();
+			System.out.println(tbr);
+			num = context.getState(tbr, Integer.parseInt(num.substring(1)));
+			System.out.println(num);
+			//}
+		}
+	}
+
+
+
+
+
+
 	//TODO: because when you reduce you use a production number, there has to be some kind of data structure with all the productions
 
 	//Get a symbol and number 
@@ -163,10 +181,10 @@ public class Parser
 
 	//TODO: shift
 	//A symbol is read from the input and pushed on the stack
-	//The symbol
 	//after the symbol the state is put 
-	private void shift() {
-
+	private void shift(char symbol, int nextState) {
+		stack.push("" + symbol);
+		stack.push("" + nextState);
 	}
 
 	//TODO: reduce
