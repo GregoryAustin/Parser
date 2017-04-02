@@ -13,9 +13,12 @@ public class Parser
 
 
 	public Parser () {
+		//This lexeroutput file is from the example.spl file in this directory 
 		lexerList = new TokenList("lexeroutput"); 
 		list = convertToParseFormat(lexerList);
 		//System.out.println(list);
+
+		//Prints out the table ready queue (just to see it)
 		while (!list.isEmpty()) {
 			System.out.print(list.remove());
 		}
@@ -27,6 +30,7 @@ public class Parser
 		TokenNode tmp = null; 
 		Queue<Character> tmpQ = new LinkedList<Character>();
 
+		//All this business is adding 
 		while (!list.isEmpty()){ 
 			tmp = list.removeFromHead(); 
 			// for integers
@@ -148,14 +152,16 @@ public class Parser
 
 	}
 
+	//TODO: because when you reduce you use a production number, there has to be some kind of data structure with all the productions
 
 	//Get a symbol and number 
 	//r means reduce 
-	//a reduce is a production number next to it
+	//reduce has a production number next to it
 	//s means shift
-	//a shift is a state number
+	//shift is a state number next to it
 
-	//shift
+
+	//TODO: shift
 	//A symbol is read from the input and pushed on the stack
 	//The symbol
 	//after the symbol the state is put 
@@ -163,8 +169,7 @@ public class Parser
 
 	}
 
-	//reduce
-
+	//TODO: reduce
 	//The right hand side of a production are replaced by the 
 	//nonterminal on the left hand side. 
 	//and popped off the stack 

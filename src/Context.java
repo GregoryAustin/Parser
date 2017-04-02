@@ -8,10 +8,11 @@ public class Context
 	private String [][] transitionTable = new String[133][50];
 	// 50 columns 
 	public Context () {
+		//Use this row header to determine next state
 		char rowStuff [] = {'(', ')', ',', '0', '1', ';', '<', '=', '>', 'a', 'b', 'd', 'e', 'f', 'h', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'w', 'z', '{', '}', '$', 'A', 'B', 'C', 'D', 'I', 'L', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 		rowHeader = rowStuff; 
 		
-
+		//This business parses the file and gets the rows (numbered the same as in JFLAP and columns)
 		File file = new File("parse_table.txt");
 		try {
 			Scanner scan = new Scanner(file);
@@ -78,6 +79,9 @@ public class Context
 		}
 		return tmp; 
 	}
+
+	//TODO: the getNextSymbol, nextState 
+	//The best way to visualize how this should work is by playing with JFLAP 
 
 
 }
