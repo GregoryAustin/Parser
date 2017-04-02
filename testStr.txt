@@ -1,0 +1,1 @@
+i(u);u=s;u=s;u;f(e(u,u))t{z(u)}l{z(u)};h;pu{u=u;u=b;f((u<u))t{u=m(u,b)};w((u>u)){u=s(u,b)};f(e(u,u))t{u=s}l{u=s}}

@@ -4,10 +4,20 @@ public class Main
 	public static void main(String[] args)
 	{
 		//testing the new parser tokenList
-		TokenList tl = new TokenList("lexeroutput");
+		/*TokenList tl = new TokenList("lexeroutput");
 		System.out.println(tl);
-		while (!tl.isEmpty())
-			System.out.println("Removed: " + tl.removeFromHead().tokenClass);
+		while (!tl.isEmpty()){
+			TokenNode temp = tl.removeFromHead();
+			System.out.println("Removed: " +  temp.tokenClass);
+		}
 		System.out.println(tl);
+	}*/ 
+		Parser prsr = new Parser();
+		Context cont = new Context();
 	}
+
+
 }
+
+
+

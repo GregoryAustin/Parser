@@ -2,24 +2,32 @@
 	<type>grammar</type>
 	<!--The list of productions.-->
 	<production>
-		<left>P'</left>
+		<left>K</left>
 		<right>P</right>
 	</production>
 	<production>
 		<left>P</left>
-		<right>C</right>
+		<right>CE</right>
 	</production>
 	<production>
-		<left>P</left>
-		<right>C;D</right>
+		<left>E</left>
+		<right>;D</right>
+	</production>
+	<production>
+		<left>E</left>
+		<right/>
 	</production>
 	<production>
 		<left>D</left>
-		<right>R</right>
+		<right>RF</right>
 	</production>
 	<production>
-		<left>D</left>
-		<right>RD</right>
+		<left>F</left>
+		<right>D</right>
+	</production>
+	<production>
+		<left>F</left>
+		<right/>
 	</production>
 	<production>
 		<left>R</left>
@@ -27,11 +35,15 @@
 	</production>
 	<production>
 		<left>C</left>
-		<right>I</right>
+		<right>IG</right>
 	</production>
 	<production>
-		<left>C</left>
-		<right>I;C</right>
+		<left>G</left>
+		<right>;C</right>
+	</production>
+	<production>
+		<left>G</left>
+		<right/>
 	</production>
 	<production>
 		<left>I</left>
@@ -58,8 +70,12 @@
 		<right>i(V)</right>
 	</production>
 	<production>
+		<left>O</left>
+		<right>z(V)</right>
+	</production>
+	<production>
 		<left>Y</left>
-		<right>u</right>
+		<right>M</right>
 	</production>
 	<production>
 		<left>V</left>
@@ -71,19 +87,27 @@
 	</production>
 	<production>
 		<left>S</left>
-		<right>u</right>
+		<right>M</right>
 	</production>
 	<production>
 		<left>N</left>
+		<right>M</right>
+	</production>
+	<production>
+		<left>M</left>
 		<right>u</right>
 	</production>
 	<production>
 		<left>A</left>
-		<right>S=s</right>
+		<right>S=H</right>
 	</production>
 	<production>
-		<left>A</left>
-		<right>S=S</right>
+		<left>H</left>
+		<right>S</right>
+	</production>
+	<production>
+		<left>H</left>
+		<right>s</right>
 	</production>
 	<production>
 		<left>A</left>
@@ -115,11 +139,15 @@
 	</production>
 	<production>
 		<left>R</left>
-		<right>f(B)t{C}</right>
+		<right>f(B)t{C}J</right>
 	</production>
 	<production>
-		<left>R</left>
-		<right>f(B)t{C}l{C}</right>
+		<left>J</left>
+		<right>1{C}</right>
+	</production>
+	<production>
+		<left>J</left>
+		<right/>
 	</production>
 	<production>
 		<left>B</left>
@@ -127,11 +155,15 @@
 	</production>
 	<production>
 		<left>B</left>
-		<right>(N&lt;N)</right>
+		<right>(NK</right>
 	</production>
 	<production>
-		<left>B</left>
-		<right>(N&gt;N)</right>
+		<left>K</left>
+		<right>&lt;N)</right>
+	</production>
+	<production>
+		<left>K</left>
+		<right>&gt;N)</right>
 	</production>
 	<production>
 		<left>B</left>
@@ -152,9 +184,5 @@
 	<production>
 		<left>Z</left>
 		<right>r(N=0;N&lt;N;N=a(N,1)){C}</right>
-	</production>
-	<production>
-		<left>O</left>
-		<right>z(V)</right>
 	</production>
 </structure>

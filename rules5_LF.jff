@@ -2,7 +2,7 @@
 	<type>grammar</type>
 	<!--The list of productions.-->
 	<production>
-		<left>P'</left>
+		<left>K</left>
 		<right>P</right>
 	</production>
 	<production>

@@ -2,7 +2,7 @@
 	<type>grammar</type>
 	<!--The list of productions.-->
 	<production>
-		<left>P'</left>
+		<left>Q</left>
 		<right>P</right>
 	</production>
 	<production>
@@ -31,7 +31,7 @@
 	</production>
 	<production>
 		<left>C</left>
-		<right>I;C</right>
+		<right>C;I</right>
 	</production>
 	<production>
 		<left>I</left>
@@ -47,7 +47,7 @@
 	</production>
 	<production>
 		<left>I</left>
-		<right>R</right>
+		<right>W</right>
 	</production>
 	<production>
 		<left>I</left>
@@ -79,15 +79,15 @@
 	</production>
 	<production>
 		<left>A</left>
-		<right>S=s</right>
+		<right>T=U</right>
 	</production>
 	<production>
-		<left>A</left>
-		<right>S=S</right>
+		<left>U</left>
+		<right>S</right>
 	</production>
 	<production>
-		<left>A</left>
-		<right>N=X</right>
+		<left>U</left>
+		<right>s</right>
 	</production>
 	<production>
 		<left>X</left>
@@ -107,18 +107,18 @@
 	</production>
 	<production>
 		<left>L</left>
-		<right>s(X,X)</right>
+		<right>q(X,X)</right>
 	</production>
 	<production>
 		<left>L</left>
 		<right>m(X,X)</right>
 	</production>
 	<production>
-		<left>R</left>
+		<left>W</left>
 		<right>f(B)t{C}</right>
 	</production>
 	<production>
-		<left>R</left>
+		<left>W</left>
 		<right>f(B)t{C}l{C}</right>
 	</production>
 	<production>
@@ -156,5 +156,21 @@
 	<production>
 		<left>O</left>
 		<right>z(V)</right>
+	</production>
+	<production>
+		<left>I</left>
+		<right>Y</right>
+	</production>
+	<production>
+		<left>U</left>
+		<right>X</right>
+	</production>
+	<production>
+		<left>T</left>
+		<right>S</right>
+	</production>
+	<production>
+		<left>T</left>
+		<right>N</right>
 	</production>
 </structure>

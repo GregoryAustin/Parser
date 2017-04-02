@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.lang.String.*;
 
 public class TokenList
 {
@@ -69,8 +68,7 @@ public class TokenList
 				tempID = scan.next();
 				tempClass = scan.next();				
 				scan.useDelimiter("\n");
-				tempSnippet = scan.next();		
-				tempSnippet = tempSnippet.substring(1);		
+				tempSnippet = scan.next();				
 				scan.useDelimiter("");
 				
 				if (scan.hasNext())
