@@ -4,23 +4,27 @@ import java.util.*;
 
 public class Parser
 {
-	//private Context context; 
+	private Context context; 
 
 
 	private TokenList lexerList; 
 	private Queue<Character> list; 
 	private Stack<String> stack; 
-	private Context context; 
 
 
 	public Parser () {
 		//This lexeroutput file is from the example.spl file in this directory 
 		lexerList = new TokenList("lexeroutput"); 
 		list = convertToParseFormat(lexerList);
+		//System.out.println(list);
+
+		//Prints out the table ready queue (just to see it)
+		while (!list.isEmpty()) {
+			System.out.print(list.remove());
+		}
+		System.out.println();
 		stack = new Stack<String>();
 		context = new Context();
-
-		this.makeTree();
 	} 
 
 	private Queue<Character> convertToParseFormat(TokenList list){ 
@@ -148,27 +152,104 @@ public class Parser
 		return tmpQ; 
 
 	}
+	
+	public void parse()
+	{
+////////////////////////////////////
+System.out.println("In Parse:");
+lexerList = new TokenList("lexeroutput"); 		
+list = convertToParseFormat(lexerList);
+		list.add('$');
+		
+////////////////////////////////////
+System.out.println("In Parse: size " + list.size());
+		
+		
+		int curState = 0;
+		stack.push(Integer.toString(curState));
+		Character curSymbol;
+		String tempSymbol = "";
+				
+		for (int i = 0; i < list.size(); i++)	//may not be size
+		{
+			////////////////////////////////////
+System.out.println("------------------------In Parse: for---------------------" + stack);		
+			curState = Integer.parseInt(stack.peek());
+	
+			curSymbol = list.remove();	
+////////////////////////////////////
+System.out.println("In Parse: about to context " + curSymbol);				
+System.out.println("In Parse: about to context " + curState);				
+			tempSymbol = context.getState(curSymbol, curState);	//may need char not Character
 
-	private void makeTree() {
-		char tbr = list.remove();
-		String num = context.getState(tbr); 
-		System.out.println(num);
-		if (num.substring(0,1).equals("s")) {
-			shift(tbr, Integer.parseInt(num.substring(1)));
+////////////////////////////////////
+System.out.println("In Parse: tempsymbol " + tempSymbol);									
+System.out.println("In Parse: curstate " + curState);									
 
-			//while (!list.isEmpty()) {
-			tbr = list.remove();
-			System.out.println(tbr);
-			num = context.getState(tbr, Integer.parseInt(num.substring(1)));
-			System.out.println(num);
-			//}
+////////////////////////////////////
+System.out.println("In Parse: after remove" );					
+			while (tempSymbol.charAt(0) != 's') //change to while
+			{
+				if (tempSymbol.charAt(0) == 'r')
+				{
+	////////////////////////////////////
+	System.out.println("In Parse: before reduce" );						
+	System.out.println("In Parse: curstate " + curState );						
+	System.out.println("In Parse: tempSymbol " + tempSymbol);						
+	System.out.println("In Parse: tempSymbol/sub1 " + tempSymbol.substring(1));						
+					Character tmpChar = reduce(Integer.parseInt(tempSymbol.substring(1)));
+					//curState = Integer.parseInt(tempSymbol.substring(1));
+					//stack.push(Integer.toString(curState));				
+					curState = Integer.parseInt(stack.peek());
+					tempSymbol = context.getState(tmpChar, curState);
+					stack.push(Character.toString(tmpChar));
+					stack.push(tempSymbol);
+					curSymbol = tmpChar;
+	////////////////////////////////////
+	System.out.println("In Parse: after reduce : tempSymbol " + tempSymbol );						
+				}
+				else
+				{
+	////////////////////////////////////
+	System.out.println("In Parse: in go tmpsymb " + tempSymbol );						
+	System.out.println("In Parse: in go curState " + curState);						
+	System.out.println("In Parse: in go curSumb " + curSymbol);						
+					
+					//curState = Integer.parseInt(stack.peek());
+				
+					
+					tempSymbol = context.getState(curSymbol, curState);	//may need char not Character
+		////////////////////////////////////
+	System.out.println("In Parse: in go2 tmpsymb " + tempSymbol );						
+	System.out.println("In Parse: in go2 curState " + curState);						
+	System.out.println("In Parse: in go2 curSumb " + curSymbol);						
+
+				
+					stack.push(Integer.toString(curState));					
+				}
+				
+			}
+			
+			if (tempSymbol.charAt(0) == 's')
+			{
+			///////////////////////////	
+				System.out.println("=============shifting state " + curState + " ;symbol " + curSymbol);
+				
+				curState = Integer.parseInt(tempSymbol.substring(1));
+			///////////////////////////////////
+				System.out.println("=============shifting state " + curState);
+				System.out.println("=============shifting state " + curSymbol);
+				shift(curSymbol, curState);
+			}
+			else 
+			{
+			///////////////////////////	
+			//	System.out.println("go state " + curState);				
+			//	stack.push(Integer.toString(curState));
+			}
+
 		}
-	}
-
-
-
-
-
+	}	
 
 	//TODO: because when you reduce you use a production number, there has to be some kind of data structure with all the productions
 
@@ -181,10 +262,14 @@ public class Parser
 
 	//TODO: shift
 	//A symbol is read from the input and pushed on the stack
+	//The symbol
 	//after the symbol the state is put 
-	private void shift(char symbol, int nextState) {
-		stack.push("" + symbol);
-		stack.push("" + nextState);
+	private void shift(Character symbol, int state) 
+	{
+		//create new node
+		//push new node to reference stack
+		stack.push(symbol.toString());
+		stack.push(Integer.toString(state));
 	}
 
 	//TODO: reduce
@@ -195,9 +280,31 @@ public class Parser
 	//When things are reduced the new top of the stack is used for the next state
 	//then the left hand side is put and then the state. (always symbol then state)
 	//when reduced the right hand side is the children of the left hand side 
-	private void reduce() { 
-		//when reduced the right hand side is the children of the left hand side 
-
+	private Character reduce(int production) 
+	{ 
+	/*	//make newNode
+		switch (production)
+		{
+			case 18:
+			{
+				stack.pop;
+				stack.pop;
+				//Node n1 = stack.pop;
+				//newNode.child = n1;
+				stack.push('S');
+			};break;
+			default: System.out.println("didn't do that one yet..");
+		}
+		*/
+	////////////////////////////////////////////
+		System.out.println("REDUCE:reducing on production: " + production);
+		
+		////////////////////////////////////////////
+		System.out.println("REDUCE: just popped " + stack.pop());	
+		System.out.println("REDUCE: just popped " + stack.pop());	
+		System.out.println("REDUCE: stack is " + stack);	
+		//stack.push("S");
+		return 'S';
 	}
 
 }

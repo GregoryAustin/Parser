@@ -13,6 +13,7 @@ public class Main
 		System.out.println(tl);
 	}*/ 
 		Parser prsr = new Parser();
+		prsr.parse();
 		//Context cont = new Context();
 
 	}
