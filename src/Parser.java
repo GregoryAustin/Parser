@@ -415,8 +415,9 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 		return 'S';
 	}
 
-	public void print()
+	public String toString()
 	{
+			String temp = "";
 			TreeNode cur = root;
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
 			int stop = 1, count = 1, level = 0;
@@ -426,19 +427,20 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 				while (!q.isEmpty())
 				{
 					cur = q.remove();
-					System.out.println(cur.toString());
+					temp += cur.toString() + "\n";
 					for (int i = 0; i < cur.childrenSize(); i++)
 						q.add(cur.getChild(i));
 					if (stop == count)
 					{
 						stop = q.size();
-						System.out.println("------------------------------------------\nlevel: " + level);
+						temp += "------------------------------------------\nlevel: " + level + "\n";
 						level++;
 						count = 0;
 					}
 					count++;
 				}
 			}
+			return temp; 
 	}
 	
 	public void prune()
