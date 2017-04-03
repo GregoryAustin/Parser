@@ -15,25 +15,28 @@ public class Main
 		System.out.println(tl);
 	}*/ 
 		Parser prsr = new Parser();
-		prsr.parse();
 		
-		String pTree = "ParseTree";
-		Scanner scan = new Scanner(System.in);
-		FileWriter fw = new FileWriter(pTree);
-		fw.write(prsr.toString());
-		System.out.println("Parse Tree saved to file '" + pTree + "'");
-		scan.close();
-		fw.close(); 
+		if(prsr.parse()) {
+			String pTree = "ParseTree";
+			Scanner scan = new Scanner(System.in);
+			FileWriter fw = new FileWriter(pTree);
+			fw.write(prsr.toString());
+			System.out.println("Parse Tree saved to file '" + pTree + "'");
+			scan.close();
+			fw.close(); 
 
 
-		prsr.prune();
-		pTree = "PrunedParseTree";
-		scan = new Scanner(System.in);
-		fw = new FileWriter(pTree);
-		fw.write(prsr.toString());
-		System.out.println("Pruned Parse Tree saved to file '" + pTree + "'");
-		scan.close();
-		fw.close();
+			prsr.prune();
+			pTree = "PrunedParseTree";
+			scan = new Scanner(System.in);
+			fw = new FileWriter(pTree);
+			fw.write(prsr.toString());
+			System.out.println("Pruned Parse Tree saved to file '" + pTree + "'");
+			scan.close();
+			fw.close();
+		}
+		
+		
 
 	}
 

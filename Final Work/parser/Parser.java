@@ -18,7 +18,7 @@ public class Parser
 
 	public Parser () {
 		//This lexeroutput file is from the example.spl file in this directory 
-		lexerList = new TokenList("lexeroutput"); 
+		lexerList = new TokenList("../lexeroutput"); 
 		list = convertToParseFormat(lexerList);
 		//System.out.println(list);
 
@@ -162,11 +162,11 @@ public class Parser
 
 	}
 	
-	public void parse()
+	public Boolean parse()
 	{
-		lexerList = new TokenList("lexeroutput"); 		
+		lexerList = new TokenList("../lexeroutput"); 		
 		list = convertToParseFormat(lexerList);
-		lexerList = new TokenList("lexeroutput"); 
+		lexerList = new TokenList("../lexeroutput"); 
 		lexerList.addToken(bigCounter++, "eof", "$");
 		list.add('$');
 		
@@ -188,7 +188,8 @@ public class Parser
 			if (stack.peek() == null)
 			{
 				System.out.println("Syntax error: null ptr" + curSymbol);
-				break;
+				return false;
+				//break;
 			}
 				
 			tempString = context.getState(curSymbol, Integer.parseInt(stack.peek()));
@@ -200,7 +201,8 @@ public class Parser
 			if (tempString == null)
 			{
 				System.out.println("Syntax error: " + curSymbol);
-				break;
+				return false;
+				//break;
 			}
 			else if (tempString.equals("acc"))
 			{
@@ -260,7 +262,7 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 		}
 		
 		
-		
+		return true; 
 	}	
 	
 	public Character LHSymbol(int production)

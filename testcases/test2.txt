@@ -4,17 +4,16 @@ res = "unknown";
 str = "even";
 checknumber;
 if(eq(res,str))
-	then {output	
-			(str)}
-	else{output(res)};
+then {output(str)}
+else{output(res)};
 halt;
 proc checknumber {
-	n  = num;
-	if((n<x))
-		then { n = mult(n,-1)};
-	while((n>x))
-	{n = sub(n,2)};
-	if(eq(n,x))
-	then{res = "even"}else{res="odd"};
+n  = num;
+if((n<x))
+then { n = mult(n,-1)};
+while((n>x))
+{n = sub(n,2)};
+if(eq(n,x))
+then{res = "even"}else{res="odd"}
 }
 

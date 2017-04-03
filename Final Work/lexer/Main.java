@@ -109,7 +109,7 @@ public class Main
 				Lexer lex = new Lexer(args[0]);
 				//System.out.print(lex);
 
-				String file = "lexeroutput";
+				String file = "../lexeroutput";
 				Scanner scan = new Scanner(System.in);
 
 				FileWriter fw = new FileWriter(file);
