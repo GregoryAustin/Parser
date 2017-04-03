@@ -50,6 +50,9 @@ public class Parser
 			// short string -> s
 			if (tmp.tokenClass.equals("integer") || tmp.tokenClass.equals("user-defined name") || tmp.tokenClass.equals("short string")) {
 				if (tmp.tokenClass.equals("integer")) {
+					//if (tmp.snippet.equals("0")) tmpQ.add('0');
+					//else if (tmp.snippet.equals("1")) tmpQ.add('1');
+					//else 
 					tmpQ.add('b');
 				} else if (tmp.tokenClass.equals("user-defined name")) {
 					tmpQ.add('u');
@@ -182,6 +185,12 @@ public class Parser
 		
 		while (true)
 		{
+			if (stack.peek() == null)
+			{
+				System.out.println("Syntax error: null ptr" + curSymbol);
+				break;
+			}
+				
 			tempString = context.getState(curSymbol, Integer.parseInt(stack.peek()));
 ///////////////////
 //System.out.println("In Parse: while ");				
@@ -286,9 +295,9 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 			case 25: return 'X';
 			case 26: return 'L';
 			case 27: return 'L';
-			case 28: return 'W';
+			case 28: return 'L';
 			case 29: return 'W';
-			case 30: return 'B';
+			case 30: return 'W';
 			case 31: return 'B';
 			case 32: return 'B';
 			case 33: return 'B';
@@ -417,6 +426,14 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 
 	public void print()
 	{
+		System.out.println(toString());
+	}
+	
+	public String toString()	
+	{
+		return DFPrint(root, 0);
+		/*
+		String ret = "";
 			TreeNode cur = root;
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
 			int stop = 1, count = 1, level = 0;
@@ -426,19 +443,36 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 				while (!q.isEmpty())
 				{
 					cur = q.remove();
-					System.out.println(cur.toString());
+					ret += cur.toString() + '\n';
 					for (int i = 0; i < cur.childrenSize(); i++)
 						q.add(cur.getChild(i));
 					if (stop == count)
 					{
 						stop = q.size();
-						System.out.println("------------------------------------------\nlevel: " + level);
+						ret += "\n------------------------------------------\nlevel: " + level + '\n';
 						level++;
 						count = 0;
 					}
 					count++;
 				}
 			}
+		return ret;
+			*/
+	}
+	
+	public String DFPrint(TreeNode cur, int depth)
+	{
+		String ret = "";
+		if (cur != null)
+		{
+			for (int i = 0; i < depth; i++)
+				ret += "---";
+			ret += cur.toString() + '\n';
+			
+			for (int i = 0; i < cur.childrenSize(); i++)
+				ret += DFPrint(cur.getChild(i), depth + 1);
+		}
+		return ret;
 	}
 	
 	public void prune()
