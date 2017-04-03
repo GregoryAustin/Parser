@@ -11,6 +11,7 @@ public class Parser
 	private Queue<Character> list; 
 	private Stack<String> stack; 
 	private Stack<TreeNode> nodeStack; 
+	private int bigCounter;
 	
 	private TreeNode root;
 
@@ -29,6 +30,7 @@ public class Parser
 		stack = new Stack<String>();
 		nodeStack = new Stack<TreeNode>();
 		context = new Context();
+		bigCounter = 0;
 	} 
 
 	private Queue<Character> convertToParseFormat(TokenList list){ 
@@ -162,7 +164,7 @@ public class Parser
 		lexerList = new TokenList("lexeroutput"); 		
 		list = convertToParseFormat(lexerList);
 		lexerList = new TokenList("lexeroutput"); 
-		lexerList.addToken(0, "eof", "$");
+		lexerList.addToken(bigCounter++, "eof", "$");
 		list.add('$');
 		
 		int curState = 0;
@@ -175,7 +177,7 @@ public class Parser
 ///////////////////
 //System.out.println("In Parse: before remove. lexerlist is " + lexerList);				
 		TokenNode curToken = lexerList.removeFromHead();
-		TreeNode curNode = new TreeNode(0, curToken.tokenClass, curToken.snippet);//change 0 to ID
+		TreeNode curNode = new TreeNode(bigCounter++, curToken.tokenClass, curToken.snippet);//change 0 to ID
 		nodeStack.push(curNode);
 		
 		while (true)
@@ -213,7 +215,7 @@ System.out.println("In Parse: shift " + tempString.substring(1));
 				
 				curSymbol = list.remove();
 				curToken = lexerList.removeFromHead();
-				curNode = new TreeNode(0, curToken.tokenClass, curToken.snippet);//change 0 to ID
+				curNode = new TreeNode(bigCounter++, curToken.tokenClass, curToken.snippet);//change 0 to ID
 				nodeStack.push(curNode);
 			}
 			else //==r
@@ -230,7 +232,7 @@ System.out.println("In Parse: reduce " + tempString.substring(1));
 //System.out.println("\t n is " + n);				
 //System.out.println("\t r is " + r);				
 				
-				tmpNode = new TreeNode(0, Character.toString(n), "none");//change 0 to ID				
+				tmpNode = new TreeNode(bigCounter++, Character.toString(n), "none");//change 0 to ID				
 				for (int i = 0; i < r; i++)
 				{
 					tmpNode.addChild(nodeStack.pop());
@@ -439,4 +441,8 @@ System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));
 			}
 	}
 	
+	public void prune()
+	{
+		if (root != null) root.prune();
+	}
 }

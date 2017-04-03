@@ -16,6 +16,9 @@ public class Main
 		prsr.parse();
 		System.out.println("__________Parser output_____________");
 		prsr.print();
+		prsr.prune();
+		System.out.println("__________Parser pruned output_____________");
+		prsr.print();
 		//Context cont = new Context();
 
 	}

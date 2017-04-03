@@ -3,13 +3,19 @@ import java.util.*;
 
 public class TreeNode extends TokenNode {
 	private LinkedList<TreeNode> children;
+	private TreeNode parent;
+	private InfoTable tableEntry;
+	
 
 	public TreeNode(int number, String tokenClass, String snippet) {
 		super(number, tokenClass, snippet);
 		children = new LinkedList<TreeNode>();
+		tableEntry = new InfoTable();
+		parent= null;
 	}
 
 	public void addChild(TreeNode node) {
+		node.parent = this; 
 		children.addFirst(node);
 	}
 
@@ -32,11 +38,37 @@ public class TreeNode extends TokenNode {
 	
 	public String toString()
 	{
-		String ret = "||Node " + tokenNo + "\t" + tokenClass 
-				+ "\t" + snippet + "||";
+		String ret;
+		if (parent != null)
+		ret = "||Node " + tokenNo + "\t" + tokenClass 
+				+ "\t" + snippet + " Parent: " + parent.tokenClass + "||";
+		else 
+		ret = "||Node " + tokenNo + "\t" + tokenClass 
+				+ "\t" + snippet + " Parent: nun||";	
 		return ret;
 	}
 		
-
-	//TODO: implement breadth first print function that prints to the tree to a file
+	public void prune()
+	{
+		for (int i = 0; i < children.size(); i++)
+		{
+			if 	(children.get(i).snippet.equals("{") || 
+				children.get(i).snippet.equals("}") || 
+				children.get(i).snippet.equals("(") || 
+				children.get(i).snippet.equals(")") || 
+				children.get(i).snippet.equals(";") || 
+				children.get(i).snippet.equals(",") )
+			{
+				children.remove(i);
+				i = 0;
+			}
+		}
+		
+		for (int i = 0; i < children.size(); i++)
+		{
+			children.get(i).prune();
+		}
+	
+	}
+	
 }

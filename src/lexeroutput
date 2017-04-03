@@ -29,26 +29,27 @@
 28	keyword	proc
 29	user-defined name	n
 30	grouping symbol	{
-31	keyword	proc
-32	user-defined name	n
-33	grouping symbol	{
-34	keyword	output
-35	grouping symbol	(
-36	user-defined name	o
-37	grouping symbol	)
-38	grouping symbol	;
-39	keyword	proc
-40	user-defined name	g
-41	grouping symbol	{
-42	user-defined name	num
-43	assignment operator	=
-44	integer	5
-45	grouping symbol	;
-46	keyword	output
-47	grouping symbol	(
-48	user-defined name	yes
-49	grouping symbol	)
-50	grouping symbol	;
-51	grouping symbol	}
+31	keyword	halt
+32	grouping symbol	;
+33	keyword	proc
+34	user-defined name	n
+35	grouping symbol	{
+36	keyword	output
+37	grouping symbol	(
+38	user-defined name	o
+39	grouping symbol	)
+40	grouping symbol	;
+41	keyword	proc
+42	user-defined name	g
+43	grouping symbol	{
+44	user-defined name	num
+45	assignment operator	=
+46	integer	5
+47	grouping symbol	;
+48	keyword	output
+49	grouping symbol	(
+50	user-defined name	yes
+51	grouping symbol	)
 52	grouping symbol	}
 53	grouping symbol	}
+54	grouping symbol	}
