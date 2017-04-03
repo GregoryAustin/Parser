@@ -1,7 +1,9 @@
+import java.io.*;
+import java.util.Scanner;
 
 public class Main
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		//testing the new parser tokenList
 		/*TokenList tl = new TokenList("lexeroutput");
@@ -14,12 +16,24 @@ public class Main
 	}*/ 
 		Parser prsr = new Parser();
 		prsr.parse();
-		System.out.println("__________Parser output_____________");
-		prsr.print();
+		
+		String pTree = "ParseTree";
+		Scanner scan = new Scanner(System.in);
+		FileWriter fw = new FileWriter(pTree);
+		fw.write(prsr.toString());
+		System.out.println("Parse Tree saved to file '" + pTree + "'");
+		scan.close();
+		fw.close(); 
+
+
 		prsr.prune();
-		System.out.println("__________Parser pruned output_____________");
-		prsr.print();
-		//Context cont = new Context();
+		pTree = "PrunedParseTree";
+		scan = new Scanner(System.in);
+		fw = new FileWriter(pTree);
+		fw.write(prsr.toString());
+		System.out.println("Pruned Parse Tree saved to file '" + pTree + "'");
+		scan.close();
+		fw.close();
 
 	}
 
