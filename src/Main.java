@@ -14,6 +14,8 @@ public class Main
 	}*/ 
 		Parser prsr = new Parser();
 		prsr.parse();
+		System.out.println("__________Parser output_____________");
+		prsr.print();
 		//Context cont = new Context();
 
 	}

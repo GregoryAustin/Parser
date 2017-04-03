@@ -10,6 +10,9 @@ public class Parser
 	private TokenList lexerList; 
 	private Queue<Character> list; 
 	private Stack<String> stack; 
+	private Stack<TreeNode> nodeStack; 
+	
+	private TreeNode root;
 
 
 	public Parser () {
@@ -24,6 +27,7 @@ public class Parser
 		}
 		System.out.println();
 		stack = new Stack<String>();
+		nodeStack = new Stack<TreeNode>();
 		context = new Context();
 	} 
 
@@ -155,101 +159,203 @@ public class Parser
 	
 	public void parse()
 	{
-////////////////////////////////////
-System.out.println("In Parse:");
-lexerList = new TokenList("lexeroutput"); 		
-list = convertToParseFormat(lexerList);
+		lexerList = new TokenList("lexeroutput"); 		
+		list = convertToParseFormat(lexerList);
+		lexerList = new TokenList("lexeroutput"); 
+		lexerList.addToken(0, "eof", "$");
 		list.add('$');
 		
-////////////////////////////////////
-System.out.println("In Parse: size " + list.size());
-		
-		
 		int curState = 0;
-		stack.push(Integer.toString(curState));
 		Character curSymbol;
-		String tempSymbol = "";
-				
-		for (int i = 0; i < list.size(); i++)	//may not be size
+		String tempString= "";
+		
+		stack.push(Integer.toString(0));
+		curSymbol = list.remove();
+		TreeNode tmpNode;
+///////////////////
+//System.out.println("In Parse: before remove. lexerlist is " + lexerList);				
+		TokenNode curToken = lexerList.removeFromHead();
+		TreeNode curNode = new TreeNode(0, curToken.tokenClass, curToken.snippet);//change 0 to ID
+		nodeStack.push(curNode);
+		
+		while (true)
 		{
-			////////////////////////////////////
-System.out.println("------------------------In Parse: for---------------------" + stack);		
-			curState = Integer.parseInt(stack.peek());
-	
-			curSymbol = list.remove();	
-////////////////////////////////////
-System.out.println("In Parse: about to context " + curSymbol);				
-System.out.println("In Parse: about to context " + curState);				
-			tempSymbol = context.getState(curSymbol, curState);	//may need char not Character
-
-////////////////////////////////////
-System.out.println("In Parse: tempsymbol " + tempSymbol);									
-System.out.println("In Parse: curstate " + curState);									
-
-////////////////////////////////////
-System.out.println("In Parse: after remove" );					
-			while (tempSymbol.charAt(0) != 's') //change to while
-			{
-				if (tempSymbol.charAt(0) == 'r')
-				{
-	////////////////////////////////////
-	System.out.println("In Parse: before reduce" );						
-	System.out.println("In Parse: curstate " + curState );						
-	System.out.println("In Parse: tempSymbol " + tempSymbol);						
-	System.out.println("In Parse: tempSymbol/sub1 " + tempSymbol.substring(1));						
-					Character tmpChar = reduce(Integer.parseInt(tempSymbol.substring(1)));
-					//curState = Integer.parseInt(tempSymbol.substring(1));
-					//stack.push(Integer.toString(curState));				
-					curState = Integer.parseInt(stack.peek());
-					tempSymbol = context.getState(tmpChar, curState);
-					stack.push(Character.toString(tmpChar));
-					stack.push(tempSymbol);
-					curSymbol = tmpChar;
-	////////////////////////////////////
-	System.out.println("In Parse: after reduce : tempSymbol " + tempSymbol );						
-				}
-				else
-				{
-	////////////////////////////////////
-	System.out.println("In Parse: in go tmpsymb " + tempSymbol );						
-	System.out.println("In Parse: in go curState " + curState);						
-	System.out.println("In Parse: in go curSumb " + curSymbol);						
-					
-					//curState = Integer.parseInt(stack.peek());
-				
-					
-					tempSymbol = context.getState(curSymbol, curState);	//may need char not Character
-		////////////////////////////////////
-	System.out.println("In Parse: in go2 tmpsymb " + tempSymbol );						
-	System.out.println("In Parse: in go2 curState " + curState);						
-	System.out.println("In Parse: in go2 curSumb " + curSymbol);						
-
-				
-					stack.push(Integer.toString(curState));					
-				}
-				
-			}
+			tempString = context.getState(curSymbol, Integer.parseInt(stack.peek()));
+///////////////////
+//System.out.println("In Parse: while ");				
+//System.out.println("\t stack " + stack);				
+//System.out.println("\t tempString is " + tempString);				
 			
-			if (tempSymbol.charAt(0) == 's')
+			if (tempString == null)
 			{
-			///////////////////////////	
-				System.out.println("=============shifting state " + curState + " ;symbol " + curSymbol);
+				System.out.println("Syntax error: " + curSymbol);
+				break;
+			}
+			else if (tempString.equals("acc"))
+			{
+				System.out.println("Syntax accepted");
+				root = nodeStack.pop();
+				break;
+			}
+			else if (tempString.charAt(0) == 's')
+			{
+///////////////////
+System.out.println("In Parse: shift " + tempString.substring(1));				
+//System.out.println("\t stack " + stack);				
+//System.out.println("\t curSymbol is " + curSymbol);				
+//System.out.println("\t curState is " + curState);
+//System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));						
 				
-				curState = Integer.parseInt(tempSymbol.substring(1));
-			///////////////////////////////////
-				System.out.println("=============shifting state " + curState);
-				System.out.println("=============shifting state " + curSymbol);
-				shift(curSymbol, curState);
+				stack.push(tempString.substring(1));
+///////////////////
+//System.out.println("In Parse: before remove again. list is " + list);						
+//System.out.println("In Parse: before remove again. lexerlist is " + lexerList);	
+				
+				curSymbol = list.remove();
+				curToken = lexerList.removeFromHead();
+				curNode = new TreeNode(0, curToken.tokenClass, curToken.snippet);//change 0 to ID
+				nodeStack.push(curNode);
 			}
-			else 
+			else //==r
 			{
-			///////////////////////////	
-			//	System.out.println("go state " + curState);				
-			//	stack.push(Integer.toString(curState));
+				int production = Integer.parseInt(tempString.substring(1));
+				Character n = LHSymbol(production);
+				int r = RHSymbolNum(production);
+			
+///////////////////
+System.out.println("In Parse: reduce " + tempString.substring(1));				
+//System.out.println("\t stack " + stack);				
+//System.out.println("\t curSymbol is " + curSymbol);				
+//System.out.println("\t curState is " + curState);				
+//System.out.println("\t n is " + n);				
+//System.out.println("\t r is " + r);				
+				
+				tmpNode = new TreeNode(0, Character.toString(n), "none");//change 0 to ID				
+				for (int i = 0; i < r; i++)
+				{
+					tmpNode.addChild(nodeStack.pop());
+					stack.pop();
+				}
+//////////////////////////
+System.out.println("\t about to push " + context.getState(n, Integer.parseInt(stack.peek())));				
+//System.out.println("\t where curSymbol is " + curSymbol);
+System.out.println("\t where n is " + n);
+System.out.println("\t where stackpeek is " + Integer.parseInt(stack.peek()));		
+//System.out.println("In Parse: list is " + list);			
+				
+				stack.push(context.getState(n, Integer.parseInt(stack.peek())));
+				nodeStack.push(tmpNode);
 			}
-
 		}
+		
+		
+		
 	}	
+	
+	public Character LHSymbol(int production)
+	{
+		switch (production)
+		{
+			case 0: return 'E';
+			case 1: return 'Q';
+			case 2: return 'P';
+			case 3: return 'P';
+			case 4: return 'D';
+			case 5: return 'D';
+			case 6: return 'R';
+			case 7: return 'C';
+			case 8: return 'C';
+			case 9: return 'I';
+			case 10: return 'I';
+			case 11: return 'I';
+			case 12: return 'I';
+			case 13: return 'I';
+			case 14: return 'O';
+			case 15: return 'Y';
+			case 16: return 'V';
+			case 17: return 'V';
+			case 18: return 'S';
+			case 19: return 'N';
+			case 20: return 'A';
+			case 21: return 'U';
+			case 22: return 'U';
+			case 23: return 'X';
+			case 24: return 'X';
+			case 25: return 'X';
+			case 26: return 'L';
+			case 27: return 'L';
+			case 28: return 'W';
+			case 29: return 'W';
+			case 30: return 'B';
+			case 31: return 'B';
+			case 32: return 'B';
+			case 33: return 'B';
+			case 34: return 'B';
+			case 35: return 'B';
+			case 36: return 'B';
+			case 37: return 'Z';
+			case 38: return 'Z';
+			case 39: return 'O';
+			case 40: return 'I';
+			case 41: return 'U';
+			case 42: return 'T';
+			case 43: return 'T';
+			default: return '#';
+			
+		}
+	}
+	
+	public int RHSymbolNum(int production)
+	{
+		switch (production)
+		{
+			case 0: return 1;
+			case 1: return 1;
+			case 2: return 1;
+			case 3: return 3;
+			case 4: return 1;
+			case 5: return 2;
+			case 6: return 5;
+			case 7: return 1;
+			case 8: return 3;
+			case 9: return 1;
+			case 10: return 1;
+			case 11: return 1;
+			case 12: return 1;
+			case 13: return 1;
+			case 14: return 4;
+			case 15: return 1;
+			case 16: return 1;
+			case 17: return 1;
+			case 18: return 1;
+			case 19: return 1;
+			case 20: return 3;
+			case 21: return 1;
+			case 22: return 1;
+			case 23: return 1;
+			case 24: return 1;
+			case 25: return 1;
+			case 26: return 6;
+			case 27: return 6;
+			case 28: return 6;
+			case 29: return 8;
+			case 30: return 12;
+			case 31: return 6;
+			case 32: return 5;
+			case 33: return 5;
+			case 34: return 2;
+			case 35: return 6;
+			case 36: return 6;
+			case 37: return 7;
+			case 38: return 22;
+			case 39: return 4;
+			case 40: return 1;
+			case 41: return 1;
+			case 42: return 1;
+			case 43: return 1;
+			default: return -1;		
+		}
+	}
 
 	//TODO: because when you reduce you use a production number, there has to be some kind of data structure with all the productions
 
@@ -307,4 +413,30 @@ System.out.println("In Parse: after remove" );
 		return 'S';
 	}
 
+	public void print()
+	{
+			TreeNode cur = root;
+			Queue<TreeNode> q = new LinkedList<TreeNode>();
+			int stop = 1, count = 1, level = 0;
+			if (cur != null)
+			{
+				q.add(cur);
+				while (!q.isEmpty())
+				{
+					cur = q.remove();
+					System.out.println(cur.toString());
+					for (int i = 0; i < cur.childrenSize(); i++)
+						q.add(cur.getChild(i));
+					if (stop == count)
+					{
+						stop = q.size();
+						System.out.println("------------------------------------------\nlevel: " + level);
+						level++;
+						count = 0;
+					}
+					count++;
+				}
+			}
+	}
+	
 }

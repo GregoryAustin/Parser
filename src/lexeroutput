@@ -1,9 +1,54 @@
-0	keyword	input
-1	grouping symbol	(
-2	user-defined name	me
-3	grouping symbol	)
-4	grouping symbol	;
-5	keyword	output
-6	grouping symbol	(
-7	user-defined name	you
-8	grouping symbol	)
+0	user-defined name	n
+1	assignment operator	=
+2	short string	"s b"
+3	grouping symbol	;
+4	user-defined name	n
+5	assignment operator	=
+6	short string	"p "
+7	grouping symbol	;
+8	user-defined name	m
+9	assignment operator	=
+10	short string	" jte "
+11	grouping symbol	;
+12	user-defined name	n
+13	assignment operator	=
+14	integer	9
+15	grouping symbol	;
+16	keyword	output
+17	grouping symbol	(
+18	user-defined name	x
+19	grouping symbol	)
+20	grouping symbol	;
+21	keyword	output
+22	grouping symbol	(
+23	user-defined name	y
+24	grouping symbol	)
+25	grouping symbol	;
+26	keyword	halt
+27	grouping symbol	;
+28	keyword	proc
+29	user-defined name	n
+30	grouping symbol	{
+31	keyword	proc
+32	user-defined name	n
+33	grouping symbol	{
+34	keyword	output
+35	grouping symbol	(
+36	user-defined name	o
+37	grouping symbol	)
+38	grouping symbol	;
+39	keyword	proc
+40	user-defined name	g
+41	grouping symbol	{
+42	user-defined name	num
+43	assignment operator	=
+44	integer	5
+45	grouping symbol	;
+46	keyword	output
+47	grouping symbol	(
+48	user-defined name	yes
+49	grouping symbol	)
+50	grouping symbol	;
+51	grouping symbol	}
+52	grouping symbol	}
+53	grouping symbol	}
